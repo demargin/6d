@@ -1,0 +1,57 @@
+-----***** Commands for Apache2 -----*****
+
+** Enable and Check Service
+--> sudo systemctl enable --now apache2
+
+** To check whether the service is running absolutely fine or not
+--> systemctl status apache2 --no-pager -l
+
+** To Reload
+--> sudo systemctl reload apache2
+
+** To Restart
+--> sudo systemctl restart apache2
+
+** To Stop
+--> sudo systemctl stop apache2
+
+** Uninstall or Remove completely
+--> sudo apt autoremove --purge apache2
+
+******* For Changing Defaul Root Directory *******
+--> cd /etc/apache2/sites-available 
+--> sudo nano /etc/apache2/sites-available/000-default.conf
+
+** Then change line: DocumentRoot /var/www/html
+
+** Then edit:
+--> sudo nano /etc/apache2/apache2.conf
+
+Change the line : <Directory /var/www/>
+
+Cuando utilizas una carpeta para apache como por ejemplo la de tu usuario, debes aseguarte que tenga permisos de búsqueda en todos sus componentes. Es decir, que los directorios tengan permisos de ejecución para el grupo de apache o para otros. Generalmente el path del usuario no tienes estos permisos, si es el caso esto lo puedes solucionar así:
+
+--> chmod o+x /home/username/
+
+
+ +-+-+-+-+-+****** Comandos PHP *********+-+-+-+-+-
+
+Agregar el repositoriio para instalar php
+--> sudo add-apt-repository ppa:ondrej/php
+--> sudo apt update
+--> sudo apt upgrade
+--> sudo apt install php8.0 php7.4
+--> sudo a2enmod php8.0 ---> comando para habilitar la version de php
+--> sudo a2dismod php8.0 ---> comando para deshabilitar la version de php
+--> php -a ---> comando para activar el modo Interactivo de phpy ejecutar codigo.
+
+
+*********** Configuring ssh Key for github ****
+go to https://github.com/settings/keys
+
+******+++++ Proton VPN **********++++++++
+xde8636
+812163X#
+
+Vinit2332
+Vinod#@23023
