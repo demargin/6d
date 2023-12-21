@@ -20,7 +20,7 @@
 
 ******* For Changing Defaul Root Directory *******
 --> cd /etc/apache2/sites-available 
---> sudo nano /etc/apache2/sites-available/000-default.conf
+--> home
 
 ** Then change line: DocumentRoot /var/www/html
 
