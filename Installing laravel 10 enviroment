@@ -60,6 +60,7 @@ php -r "unlink('composer-setup.php');"
 --->>> curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh
 --->>> curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
+--->>> Close the terminal, and open it again
 In some Cases the two commands above will not work, so you can try the next one:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
