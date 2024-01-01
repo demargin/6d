@@ -1,4 +1,7 @@
 1.- app/Http/Controllers/AdminController.php
 2.- app/Models/User.php
 3.- database/migrations/2014_10_12_000000_create_users_table.php
-
+4.- database/seeders/UserSeeder.php
+5.- database/seeders/DatabaseSeeder.php
+6.- database/factories/UserFactory.php
+7.- 
