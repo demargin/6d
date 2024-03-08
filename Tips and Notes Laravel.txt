@@ -1,0 +1,15 @@
+////***** Tema PSR-4 :: Convencion de nombres en laravel ********\\\\\\\\\\\\
+
+En Laravel, seguir las convenciones de nombres y la estructura de directorios es fundamental para aprovechar su sistema de autoloading y sus capacidades de resolución automática. La convención de nombres PSR-4 es particularmente importante en este sentido.
+
+Algunos de los aspectos que dependen de estas convenciones incluyen:
+
+    Autoloading: Composer, la herramienta de gestión de dependencias de PHP utilizada por Laravel, utiliza las convenciones PSR-4 para cargar automáticamente las clases cuando se instalan nuevas dependencias o se actualiza el código.
+
+    Resolución de Fábricas y Seeders: Laravel espera que las fábricas y los seeders tengan nombres específicos basados en la convención de nombres de modelos. Si sigues estas convenciones, Laravel puede encontrar automáticamente las clases correctas.
+
+    Resolución de Rutas y Controladores: En Laravel, las rutas y los controladores también siguen las convenciones. Si tienes un controlador llamado MyController, Laravel espera que el archivo esté en app/Http/Controllers/MyController.php.
+
+    Eloquent y Relaciones: Cuando defines relaciones en tus modelos Eloquent, Laravel asume que las clases relacionadas siguen la convención de nombres.
+
+En resumen, seguir las convenciones de Laravel, que a su vez siguen las convenciones PSR-4, hace que el desarrollo sea más fluido y ayuda a Laravel a hacer muchas suposiciones automáticamente. Esto no solo facilita el desarrollo, sino que también mejora la legibilidad del código para otros desarrolladores que trabajan con el mismo proyecto.

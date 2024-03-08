@@ -15,7 +15,7 @@ How to install laravel
 once inside maridb cli we need to create the admin or root user:
 
 --->>> GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
---->>> FLUSH PRIVILEGES:
+--->>> FLUSH PRIVILEGES;
 --->>> EXIT:
 
 Optionally we can install a database manager like Dbeaber CE
