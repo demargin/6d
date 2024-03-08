@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\Student_ModelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,4 +27,8 @@ class Student_Model extends Model
         'email',
         'phone'
     ];
+
+    //Se agrega la referencia al Factory correspondiente
+    //protected $factory = StudentFactory::class;
+    protected $factory = Student_ModelFactory::class;
 }
