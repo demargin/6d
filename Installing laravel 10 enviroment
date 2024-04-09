@@ -14,7 +14,7 @@ How to install laravel
 --->>> sudo mariadb
 once inside maridb cli we need to create the admin or root user:
 
---->>> GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+--->>> GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'adminkid' WITH GRANT OPTION;
 --->>> FLUSH PRIVILEGES;
 --->>> EXIT:
 
