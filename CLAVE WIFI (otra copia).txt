@@ -1,0 +1,13 @@
+*tqL9guGNkvzwoC6ciPrC#
+
+#B4C8EF@22B03D*
+
+*tqL9guGNkvzwoC6ciPrC#'5g
+
+*tqL9guGNkvzwoC6ciPrC#'5g
+*tqL9guGNkvzwoC6ciPrC#5g
+
+❯ sudo systemctl restart NetworkManager.service 
+reiniciar controlador de wifi
+
+Intel Corporation Ice Lake-LP PCH CNVi WiFi (rev 30)
