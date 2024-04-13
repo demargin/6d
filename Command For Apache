@@ -56,3 +56,69 @@ xde8636
 
 Vinit2332
 Vinod#@23023
+
+
+
+***********************Notas a tomar en cuenta a usar SQLITE o si se desea escribir en archivos******************************
+
+Cambiar los permisos de solo lectura (o+x) en un archivo o directorio no sería suficiente para resolver el problema de "attempt to write a readonly database" al interactuar con SQLite desde PHP a través de Apache. Aquí te explico por qué y cómo deberías abordar este problema correctamente:
+
+    Permisos de Directorio y Archivos: En tu caso, el problema ocurre porque PHP (ejecutado por Apache) no tiene permisos suficientes para escribir en la base de datos SQLite (database.sqlite) o en el directorio que la contiene. Los permisos de solo lectura (o+x) permitirían que otros usuarios (no el propietario ni el grupo) accedan y ejecuten (x) el archivo o directorio, pero no resolverían el problema de escritura.
+
+    Cambiar Propietario y Grupo: La mejor práctica es cambiar el propietario y el grupo del directorio y de los archivos relevantes a www-data:www-data, que es el usuario y grupo bajo el cual se ejecuta Apache en la mayoría de las distribuciones Linux.
+
+    bash
+
+sudo chown -R www-data:www-data /home/devmartin/Documents/www/html/phpTest
+
+Esto asegura que Apache tenga los permisos adecuados para leer y escribir en los archivos y directorios necesarios.
+
+Permisos de Escritura: Además de cambiar el propietario y grupo, también podrías otorgar permisos de escritura (o+w) si necesitas que otros usuarios también puedan escribir en los archivos. Sin embargo, esto debería hacerse con precaución según los requisitos de seguridad de tu aplicación.
+
+bash
+
+sudo chmod -R o+w /home/devmartin/Documents/www/html/phpTest
+
+Reinicio de Apache: Después de cambiar los permisos, es importante reiniciar Apache para que los cambios surtan efecto:
+
+bash
+
+sudo systemctl restart apache2
+
+Verificación de Permisos: Puedes verificar que los permisos se hayan aplicado correctamente con el comando ls -l:
+
+bash
+
+ls -l /home/devmartin/Documents/www/html/phpTest
+
+
+
+********Cambiar Permisos a todo el directorio**********
+Cambiar el Propietario y Grupo del Directorio Completo:
+
+Utiliza el comando chown con la opción -R para cambiar recursivamente el propietario y grupo de todo el contenido dentro del directorio principal que deseas modificar. Por ejemplo:
+
+bash
+
+sudo chown -R www-data:www-data /ruta/a/tu/directorio
+
+Reemplaza /ruta/a/tu/directorio con la ruta completa a tu directorio principal que contiene los archivos PHP y bases de datos SQLite.
+
+Verificar los Permisos:
+
+Después de cambiar los permisos, verifica que los cambios se hayan aplicado correctamente utilizando el comando ls -l en el directorio:
+
+bash
+
+ls -l /ruta/a/tu/directorio
+
+Asegúrate de que todos los archivos y subdirectorios dentro de tu directorio principal ahora tengan www-data:www-data como propietario y grupo.
+
+Reinicio de Apache:
+
+Si estás utilizando Apache para servir tus archivos PHP y acceder a las bases de datos SQLite, reinicia Apache para que pueda aplicar los nuevos permisos:
+
+bash
+
+sudo systemctl restart apache2
+
