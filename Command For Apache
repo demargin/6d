@@ -122,3 +122,29 @@ bash
 
 sudo systemctl restart apache2
 
+***********permisos en elos directorios de linux*************
+En el contexto de los permisos (r, w, x), cada uno tiene su significado específico:
+
+    r (lectura): Permite leer el contenido del archivo.
+    w (escritura): Permite modificar el contenido del archivo.
+    x (ejecución): Permite ejecutar el archivo como un programa o script.
+
+Cuando usas chmod para agregar el permiso de ejecución (+x) a un archivo, estás otorgando específicamente el permiso de ejecución sin afectar los permisos de lectura (r) y escritura (w). Es decir, agregar +x no implica automáticamente que el archivo tendrá permisos de lectura (r) y escritura (w).
+
+Si deseas otorgar múltiples permisos a la vez (lectura, escritura y ejecución), debes combinarlos explícitamente utilizando chmod con la notación adecuada. Aquí te muestro cómo podrías hacerlo:
+
+bash
+
+chmod u+rwx archivo
+
+En este ejemplo, u+rwx otorga al propietario (u) del archivo (archivo) los permisos de lectura (r), escritura (w) y ejecución (x). Esto se logra combinando los permisos utilizando la notación + para agregar permisos.
+
+Si solo deseas otorgar permisos de ejecución (x) sin afectar los permisos de lectura (r) y escritura (w), puedes hacerlo de la siguiente manera:
+
+bash
+
+chmod +x archivo
+
+Este comando agrega el permiso de ejecución (+x) a todos los usuarios (propietario, grupo y otros), manteniendo intactos los permisos de lectura y escritura existentes.
+
+En resumen, al utilizar chmod, debes especificar explícitamente qué permisos deseas agregar (+), eliminar (-) o establecer (=) para cada categoría de usuario (propietario, grupo, otros). Agregar +x solo otorga el permiso de ejecución sin afectar automáticamente los permisos de lectura (r) y escritura (w). Si deseas otorgar múltiples permisos simultáneamente, combínalos adecuadamente en el comando chmod según tus necesidades específicas.
