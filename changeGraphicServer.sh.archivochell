@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Función para imprimir en color amarillo
+print_yellow() {
+    echo -e "\e[1;33m$1\e[0m"  # Color amarillo y formato negrita
+}
+
+# Función para imprimir en color verde
+print_green() {
+    echo -e "\e[1;32m$1\e[0m"  # Color verde y formato negrita
+}
+
+# Función para verificar si Wayland está habilitado
+verificar_wayland() {
+    if grep -q '#WaylandEnable=false' /etc/gdm3/custom.conf; then
+        print_green "Wayland está habilitado."
+        echo
+    else
+        print_yellow "Wayland no está habilitado (X11 está habilitado)."
+        echo
+    fi
+    # Mostrar las últimas dos líneas del archivo custom.conf 
+    echo ".................................."
+    sudo tail -n 1 /etc/gdm3/custom.conf | awk '{print $0}'
+    echo ".................................."
+    echo 
+}
+
+# Función para habilitar Wayland (desactivar X11)
+habilitar_wayland() {
+    tempfile=$(mktemp)  # Crear archivo temporal
+    awk '!($0 ~ /WaylandEnable=false/)' /etc/gdm3/custom.conf > $tempfile
+    echo "#WaylandEnable=false" >> $tempfile
+    sudo mv $tempfile /etc/gdm3/custom.conf
+    if grep -q '#WaylandEnable=false' /etc/gdm3/custom.conf; then
+        print_green "Wayland habilitado correctamente."
+        verificar_wayland
+        reiniciar_computadora
+    else
+        echo "Error al habilitar Wayland. Revisa el archivo de configuración."
+    fi
+}
+
+# Función para habilitar X11 (desactivar Wayland)
+habilitar_x11() {
+    tempfile=$(mktemp)  # Crear archivo temporal
+    awk '!($0 ~ /WaylandEnable=false/)' /etc/gdm3/custom.conf > $tempfile
+    echo "WaylandEnable=false" >> $tempfile
+    sudo mv $tempfile /etc/gdm3/custom.conf
+    if grep -q 'WaylandEnable=false' /etc/gdm3/custom.conf; then
+        print_yellow "X11 habilitado correctamente."
+        verificar_wayland
+        reiniciar_computadora
+    else
+        echo "Error al habilitar X11. Revisa el archivo de configuración."
+    fi
+}
+
+# Función para reiniciar la computadora
+reiniciar_computadora() {
+    read -p "¿Deseas reiniciar la computadora ahora? (y/n): " opcion
+    if [ "$opcion" = "y" ]; then
+        sudo reboot
+    else
+        echo "No se reiniciará la computadora. Recuerda reiniciar manualmente más tarde."
+    fi
+}
+
+# Mostrar estado actual de Wayland
+verificar_wayland
+
+# Mostrar menú de selección
+echo "Selecciona una opción:"
+echo "1. Habilitar Wayland"
+echo "2. Habilitar X11"
+echo "3. Salir"
+read -p "Nro de opcion :: " opcion
+
+case $opcion in
+    1) habilitar_wayland ;;
+    2) habilitar_x11 ;;
+    3) echo "Saliendo del script. No se realizará ninguna acción." ;;
+    *) echo "Opción no válida";;
+esac
+
+# Firma personalizada 'DevMartin' con caracteres ASCII con ANSI Shadow patorjk.com
+echo -e "\n\e[1;36m██████╗ ███████╗██╗   ██╗    ███╗   ███╗ █████╗ ██████╗ ████████╗██╗███╗   ██╗"
+echo -e "██╔══██╗██╔════╝██║   ██║    ████╗ ████║██╔══██╗██╔══██╗╚══██╔══╝██║████╗  ██║"
+echo -e "██║  ██║█████╗  ██║   ██║    ██╔████╔██║███████║██████╔╝   ██║   ██║██╔██╗ ██║"
+echo -e "██║  ██║██╔══╝  ╚██╗ ██╔╝    ██║╚██╔╝██║██╔══██║██╔══██╗   ██║   ██║██║╚██╗██║"
+echo -e "██████╔╝███████╗ ╚████╔╝     ██║ ╚═╝ ██║██║  ██║██║  ██║   ██║   ██║██║ ╚████║"
+echo -e "╚═════╝ ╚══════╝  ╚═══╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝"
+echo -e "                                                                              \e[0m\n"
+
+exit 0

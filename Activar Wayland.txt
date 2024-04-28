@@ -1,0 +1,21 @@
+Como activar Wayland, esta desactivado porque no tiene compatibilidad al momento de querer grabar usando el software GPU Screen Recorder sobre todo con el procesador de Intel, ya que he probado el de AMD y funciona perfectamente sin tener que estar desactivando el wayland, asi que aqui estan los comando que use para desactivar el Wayland.
+
+-- Primero para saber que tipo de servidor de visualizacion estamos usando, ejecutamos el comando:
+
+---->>>> echo $XDG_SESSION_TYPE
+
+-- Luego modificamos el siguiente archivo con el siguiente comando:
+
+--->>> sudo nano /etc/gdm3/custom.conf
+buscamos la linea que diga:
+     [daemon]
+     # Uncomment the line below to force the login screen to use Xorg
+     WaylandEnable=false
+y lo descomentamos, guardamos con 'ctrl + o' y listo.
+
+-- Para que se apliquen los cambios podemos simplemente reiniciar o cerrar sesion, o podemos forzar el reinicio del servicio con el siguiente comando :
+
+--->>> sudo systemctl restart gdm   # Para GDM
+
+❯ awk 'NR >= 4 && NR <= 7' /etc/gdm3/custom.conf
+
