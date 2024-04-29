@@ -10,6 +10,12 @@ print_green() {
     echo -e "\e[1;32m$1\e[0m"  # Color verde y formato negrita
 }
 
+# Función para mostrar el tipo de sesión
+mostrar_tipo_sesion() {
+    echo "Tipo de sesión actual: $XDG_SESSION_TYPE"
+    echo
+}
+
 # Función para verificar si Wayland está habilitado
 verificar_wayland() {
     if grep -q '#WaylandEnable=false' /etc/gdm3/custom.conf; then
@@ -21,16 +27,18 @@ verificar_wayland() {
     fi
     # Mostrar las últimas dos líneas del archivo custom.conf 
     echo ".................................."
-    sudo tail -n 1 /etc/gdm3/custom.conf | awk '{print $0}'
+    sudo awk 'NR >= 5 && NR <= 7' /etc/gdm3/custom.conf
+    #Show the las code line
+    #sudo tail -n 1 /etc/gdm3/custom.conf | awk '{print $0}'
     echo ".................................."
-    echo 
+    sudo echo $XDG_SESSION_TYPE
+    echo
 }
 
 # Función para habilitar Wayland (desactivar X11)
 habilitar_wayland() {
     tempfile=$(mktemp)  # Crear archivo temporal
-    awk '!($0 ~ /WaylandEnable=false/)' /etc/gdm3/custom.conf > $tempfile
-    echo "#WaylandEnable=false" >> $tempfile
+    awk '/WaylandEnable=/ {sub(/^/, "#", $0)} 1' /etc/gdm3/custom.conf > $tempfile
     sudo mv $tempfile /etc/gdm3/custom.conf
     if grep -q '#WaylandEnable=false' /etc/gdm3/custom.conf; then
         print_green "Wayland habilitado correctamente."
@@ -44,8 +52,7 @@ habilitar_wayland() {
 # Función para habilitar X11 (desactivar Wayland)
 habilitar_x11() {
     tempfile=$(mktemp)  # Crear archivo temporal
-    awk '!($0 ~ /WaylandEnable=false/)' /etc/gdm3/custom.conf > $tempfile
-    echo "WaylandEnable=false" >> $tempfile
+    awk '/WaylandEnable=/ {sub(/^#/, "", $0)} 1' /etc/gdm3/custom.conf > $tempfile
     sudo mv $tempfile /etc/gdm3/custom.conf
     if grep -q 'WaylandEnable=false' /etc/gdm3/custom.conf; then
         print_yellow "X11 habilitado correctamente."
@@ -60,6 +67,22 @@ habilitar_x11() {
 reiniciar_computadora() {
     read -p "¿Deseas reiniciar la computadora ahora? (y/n): " opcion
     if [ "$opcion" = "y" ]; then
+        # Firma personalizada 'DevMartin' con caracteres ASCII con ANSI Shadow patorjk.com
+        echo -e "\n\e[1;36m██████╗ ███████╗██╗   ██╗    ███╗   ███╗ █████╗ ██████╗ ████████╗██╗███╗   ██╗"
+        echo -e "██╔══██╗██╔════╝██║   ██║    ████╗ ████║██╔══██╗██╔══██╗╚══██╔══╝██║████╗  ██║"
+        echo -e "██║  ██║█████╗  ██║   ██║    ██╔████╔██║███████║██████╔╝   ██║   ██║██╔██╗ ██║"
+        echo -e "██║  ██║██╔══╝  ╚██╗ ██╔╝    ██║╚██╔╝██║██╔══██║██╔══██╗   ██║   ██║██║╚██╗██║"
+        echo -e "██████╔╝███████╗ ╚████╔╝     ██║ ╚═╝ ██║██║  ██║██║  ██║   ██║   ██║██║ ╚████║"
+        echo -e "╚═════╝ ╚══════╝  ╚═══╝      ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝"
+        echo -e "                                                                              \e[0m\n"    
+        echo "Reiniciando la computadora en 5 segundos..."
+        for (( i=5; i>=1; i-- )); do
+            echo -n "$i "
+            sleep 1
+        done
+        echo
+        echo " Adios \(^o^)/..... "
+        sleep 2
         sudo reboot
     else
         echo "No se reiniciará la computadora. Recuerda reiniciar manualmente más tarde."
@@ -68,6 +91,7 @@ reiniciar_computadora() {
 
 # Mostrar estado actual de Wayland
 verificar_wayland
+mostrar_tipo_sesion
 
 # Mostrar menú de selección
 echo "Selecciona una opción:"
