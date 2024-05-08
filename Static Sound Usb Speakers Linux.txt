@@ -1,0 +1,12 @@
+Posibles soluciones al sonido statico cuando se conecta un parlante con alimentacion usb una laptop
+
+        
+cat /sys/module/snd_hda_intel/parameters/power_save
+Debe mostrar como salida el valor 1, que significa ON
+
+-->para desahabilitarlo necesitamos ejecutar lo siguiente
+sudo su
+echo 0 > /sys/module/snd_hda_intel/parameters/power_save 
+
+https://bbs.archlinux.org/viewtopic.php?id=266748
+https://itsfoss.com/buzzing-noise-speaker-linux/
