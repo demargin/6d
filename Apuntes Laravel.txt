@@ -1,0 +1,3 @@
+Cuando se crea una relacion many to many, por ejemplo que un producto puede tener varios pedidos y un pedido puede tener varios productos, se usa una tabla pivote, esto con el fin de hacer el manejo de la relacion Elquent mas flexible, sin embargo algo que se debe tener en cuenta al usar una tabla pivote es que ya no se debe usar una columna de referencia en ninguna de las tablas products o orders (product_id o order_id), esto le estaria mal definido y haria que la tabla pivote no tenga utilidad y que la relacion definida como Many to Many no tendria un sentido por la convencion que maneja eloquent ORM.
+
+
